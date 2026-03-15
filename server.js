@@ -16,11 +16,12 @@ app.set("trust proxy", 1);
 //////////////////////////////////////////////////////////////
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://shivamgairola2577.github.io",
-    "https://shivamgairola2577.github.io/ecomerceshivagairoIa1"
-  ],
+origin: [
+  "http://localhost:3000",
+  "https://shivamgairola2577.github.io",
+  "https://shivamgairola2577.github.io/ecomerceshivagairoIa1",
+  "https://ecomercebackand1shivam.onrender.com"
+],
   credentials: true
 }));
 
@@ -32,7 +33,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "none",
     maxAge: 1000 * 60 * 60
   }
