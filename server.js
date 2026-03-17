@@ -7,7 +7,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const session = require("express-session");
 
 const fetch = require("node-fetch");
-
+const MongoStore = require("connect-mongo");
 const app = express();
 app.set("trust proxy", 1);
 
@@ -16,28 +16,35 @@ app.set("trust proxy", 1);
 //////////////////////////////////////////////////////////////
 
 app.use(cors({
-origin: [
-  "http://localhost:3000",
-  "https://shivamgairola2577.github.io",
-  "https://shivamgairola2577.github.io/ecomerceshivagairoIa1",
-  "https://ecomercebackand1shivam.onrender.com"
-],
+  origin: [
+    "http://localhost:3000",
+    "https://shivamgairola2577.github.io"
+  ],
   credentials: true
 }));
 
 app.use(express.json());
 
 app.use(session({
+  name: "ecommerce.sid",
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  proxy: true,
+
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI
+  }),
+
   cookie: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     sameSite: "none",
     maxAge: 1000 * 60 * 60
   }
 }));
+
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -190,7 +197,14 @@ app.get("/logout", (req, res) => {
     }
 
     req.session.destroy(() => {
-      res.clearCookie("connect.sid");
+
+      res.clearCookie("ecommerce.sid", {
+        path: "/",
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+      });
+
       res.json({ message: "Logged out successfully" });
     });
 
@@ -521,10 +535,10 @@ app.get("/auth/google",
 
 app.get("/auth/google/callback",
   passport.authenticate("google", {
-   failureRedirect: "https://shivamgairola2577.github.io/ecomerceshivagairoIa1/login"
+  failureRedirect: "https://shivamgairola2577.github.io/ecomerceshivagairola1/login"
   }),
   (req, res) => {
-  res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairoIa1/");
+  res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairola1/");
   }
 );
 
