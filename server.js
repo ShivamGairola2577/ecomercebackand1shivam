@@ -538,14 +538,12 @@ app.get("/auth/google",
     prompt: "select_account"   // forces account selection every time
   })
 );
-
 app.get("/auth/google/callback",
   passport.authenticate("google", {
-  failureRedirect: "https://shivamgairola2577.github.io/ecomerceshivagairola1/login"
+    failureRedirect: "https://shivamgairola2577.github.io/ecomerceshivagairola1/#/login"
   }),
   (req, res) => {
-res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairola1/");
-return;
+    res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairola1/#/profile");
   }
 );
 
