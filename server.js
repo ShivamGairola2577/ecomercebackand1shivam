@@ -317,13 +317,13 @@ app.get("/search", async (req, res) => {
     let query = req.query.query || "";
     query = query.trim().toLowerCase();
 
+    // ✅ ALWAYS return object
     if (!query) {
-      return res.json([]);
+      return res.json({ products: [] });
     }
 
     let response;
 
-    // 🔥 If user searches category name → use category API
     if (query === "tops") {
       response = await fetch(
         `https://dummyjson.com/products/category/tops?limit=100`
@@ -334,13 +334,19 @@ app.get("/search", async (req, res) => {
       );
     }
 
+    // 🔥 IMPORTANT CHECK
+    if (!response.ok) {
+      return res.json({ products: [] });
+    }
+
     const data = await response.json();
 
-    res.json(data.products || []);
+    // ✅ ALWAYS return object
+    res.json({ products: data.products || [] });
 
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Search error" });
+    console.log("Search error:", error);
+    res.status(500).json({ products: [] });
   }
 });
 
