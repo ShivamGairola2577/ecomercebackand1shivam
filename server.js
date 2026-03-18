@@ -6,7 +6,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const session = require("express-session");
 
-const fetch = require("node-fetch");
+
 const MongoStore = require("connect-mongo");
 const app = express();
 app.set("trust proxy", 1);
