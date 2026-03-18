@@ -544,7 +544,8 @@ app.get("/auth/google/callback",
   failureRedirect: "https://shivamgairola2577.github.io/ecomerceshivagairola1/login"
   }),
   (req, res) => {
- res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairola1/#/profile");
+res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairola1/");
+return;
   }
 );
 
