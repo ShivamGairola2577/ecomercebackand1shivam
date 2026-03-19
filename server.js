@@ -16,10 +16,7 @@ app.set("trust proxy", 1);
 //////////////////////////////////////////////////////////////
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://shivamgairola2577.github.io"
-  ],
+  origin: "https://shivamgairola2577.github.io",
   credentials: true
 }));
 
@@ -37,12 +34,11 @@ app.use(session({
   }),
 
   cookie: {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  maxAge: 1000 * 60 * 60,
-  domain: ".onrender.com"   // 🔥 ADD THIS
-}
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 1000 * 60 * 60
+  }
 }));
 
 
