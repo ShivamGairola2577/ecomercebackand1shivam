@@ -37,11 +37,12 @@ app.use(session({
   }),
 
   cookie: {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 1000 * 60 * 60
-  }
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  maxAge: 1000 * 60 * 60,
+  domain: ".onrender.com"   // 🔥 ADD THIS
+}
 }));
 
 
@@ -543,7 +544,11 @@ app.get("/auth/google/callback",
     failureRedirect: "https://shivamgairola2577.github.io/ecomerceshivagairola1/#/login"
   }),
   (req, res) => {
-    res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairola1/#/profile");
+
+    req.session.save(() => {   // 🔥 IMPORTANT FIX
+      res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairola1/#/profile");
+    });
+
   }
 );
 
