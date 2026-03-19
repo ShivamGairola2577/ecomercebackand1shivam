@@ -542,7 +542,7 @@ app.get("/auth/google/callback",
   (req, res) => {
 
     req.session.save(() => {   // 🔥 IMPORTANT FIX
-res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairola1/#/profile");
+res.redirect("https://shivamgairola2577.github.io/ecomerceshivagairola1/?login=success");
     });
 
   }
